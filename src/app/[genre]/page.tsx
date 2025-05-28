@@ -3,15 +3,14 @@
 import React, { useEffect, useMemo } from 'react'
 import { AnimeFeed } from '@/components/feed/AnimeFeed'
 
-// ✅ Linha 6: Usando interface em vez de type
-interface Props {
+// 🔧 Interface renomeada para seguir a convenção de nomes
+interface GenrePageParams {
   params: {
     genre: string
   }
 }
 
-// ✅ Linha 22: React importado para projetos com JSX
-export default function GenrePage({ params }: Props): JSX.Element {
+export default function GenrePage({ params }: GenrePageParams): JSX.Element {
   const formattedGenre = useMemo(() => {
     const decoded = decodeURIComponent(params.genre).replace(/-/g, ' ')
     return decoded.charAt(0).toUpperCase() + decoded.slice(1).toLowerCase()

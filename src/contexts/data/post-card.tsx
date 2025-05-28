@@ -1,5 +1,5 @@
 // data/post-cards.ts
-export type PostCard = {
+export interface PostCard {
   id: number
   caption: string
   genre: string

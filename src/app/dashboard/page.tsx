@@ -19,7 +19,7 @@ import {
   HouseSimple,
 } from '@phosphor-icons/react'
 
-type Post = {
+interface Post {
   id: string
   imageUrl: string
   genre: string

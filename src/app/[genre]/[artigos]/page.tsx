@@ -72,7 +72,7 @@ function InfoArticlePage(): JSX.Element {
   const paragraphStyle = {
     textAlign: 'justify',
     textIndent: '2em',
-  }
+    }
 
   if (!activePost) {
     return (

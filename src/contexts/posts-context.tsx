@@ -3,7 +3,7 @@ import { PostCard, postCards } from './data/post-card'
 import { useRouter } from 'next/navigation'
 import { Post, postsFeed } from './data/post'
 
-type PostContextType = {
+interface PostContextType {
   cards: PostCard[]
   setCards: React.Dispatch<React.SetStateAction<PostCard[]>>
   posts: any
