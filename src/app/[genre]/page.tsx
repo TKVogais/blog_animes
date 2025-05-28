@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { AnimeFeed } from '@/components/feed/AnimeFeed'
 
 type Props = {
@@ -10,10 +10,14 @@ type Props = {
 }
 
 export default function GenrePage({ params }: Props) {
-  useEffect(() => {
-    const genre = decodeURIComponent(params.genre).replace(/-/g, ' ');
-    document.title = `Otaku Zone | ${genre.charAt(0).toUpperCase() + genre.slice(1).toLowerCase()}`
+  const formattedGenre = useMemo(() => {
+    const decoded = decodeURIComponent(params.genre).replace(/-/g, ' ')
+    return decoded.charAt(0).toUpperCase() + decoded.slice(1).toLowerCase()
   }, [params.genre])
+
+  useEffect(() => {
+    document.title = `Otaku Zone | ${formattedGenre}`
+  }, [formattedGenre])
 
   return <AnimeFeed genre={params.genre} />
 }

@@ -4,8 +4,60 @@ import React, { useEffect, useState } from 'react'
 import { Box, Container, Grid, Typography, Divider, Paper } from '@mui/material'
 import { usePost } from '@/contexts/posts-context'
 
-const DEFAULT_IMAGE_URL =
-  'https://images.pexels.com/photos/1024977/pexels-photo-1024977.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=800'
+const ImageWithFallback = ({
+  src,
+  alt = '',
+  height = 400,
+}: {
+  src?: string
+  alt?: string
+  height?: number
+}) => {
+  const [error, setError] = useState(false)
+
+  const handleError = () => setError(true)
+
+  if (error || !src) {
+    return (
+      <Box
+        sx={{
+          width: '100%',
+          height,
+          backgroundColor: 'rgba(87, 87, 87, 0.3)',
+          borderRadius: 2,
+          boxShadow: 3,
+          mb: 5,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          px: 2,
+        }}
+      >
+        <Typography variant="body1" color="black">
+          A imagem está indisponível no momento!
+        </Typography>
+      </Box>
+    )
+  }
+
+  return (
+    <Box
+      component="img"
+      src={src}
+      alt={alt}
+      onError={handleError}
+      sx={{
+        width: '100%',
+        height,
+        objectFit: 'cover',
+        borderRadius: 2,
+        boxShadow: 3,
+        mb: 5,
+      }}
+    />
+  )
+}
 
 export default function InfoArticlePage() {
   const { activePost } = usePost()
@@ -13,53 +65,6 @@ export default function InfoArticlePage() {
   useEffect(() => {
     document.title = 'Otaku Zone'
   }, [])
-
-  const renderImageOrFallback = (src: string | undefined, alt = '', height = 400) => {
-    const [error, setError] = useState(false)
-
-    const handleError = () => setError(true)
-
-    if (error || !src) {
-      return (
-        <Box
-          sx={{
-            width: '100%',
-            height,
-            backgroundColor: 'rgba(87, 87, 87, 0.3)',
-            borderRadius: 2,
-            boxShadow: 3,
-            mb: 5,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            px: 2,
-          }}
-        >
-          <Typography variant="body1" color="black">
-            A imagem está indisponível no momento!
-          </Typography>
-        </Box>
-      )
-    }
-
-    return (
-      <Box
-        component="img"
-        src={src}
-        alt={alt}
-        onError={handleError}
-        sx={{
-          width: '100%',
-          height,
-          objectFit: 'cover',
-          borderRadius: 2,
-          boxShadow: 3,
-          mb: 5,
-        }}
-      />
-    )
-  }
 
   const paperShadow = '0 4px 20px rgba(0,0,0,0.3)'
   const paragraphStyle = {
@@ -103,7 +108,7 @@ export default function InfoArticlePage() {
           </Typography>
 
           {/* Imagem principal */}
-          {renderImageOrFallback(activePost?.imagem1, 'Imagem 1', 400)}
+          <ImageWithFallback src={activePost?.imagem1} alt="Imagem 1" height={400} />
 
           <Typography variant="body1" sx={{ ...paragraphStyle, mb: 6 }}>
             {activePost?.paragraph2}
@@ -122,7 +127,7 @@ export default function InfoArticlePage() {
           </Typography>
 
           {/* Imagem sinopse */}
-          {renderImageOrFallback(activePost?.imagem2, 'Imagem 2', 400)}
+          <ImageWithFallback src={activePost?.imagem2} alt="Imagem 2" height={400} />
 
           <Divider sx={{ mb: 4 }} />
           {/* Elementos da Obra */}
@@ -131,12 +136,12 @@ export default function InfoArticlePage() {
           </Typography>
           <Grid container spacing={2} sx={{ my: 4 }}>
             <Grid item xs={12} sm={6}>
-              {renderImageOrFallback(activePost?.imagem3, 'Imagem 3', 200)}
-              {renderImageOrFallback(activePost?.imagem4, 'Imagem 4', 200)}
+              <ImageWithFallback src={activePost?.imagem3} alt="Imagem 3" height={200} />
+              <ImageWithFallback src={activePost?.imagem4} alt="Imagem 4" height={200} />
             </Grid>
             <Grid item xs={12} sm={6}>
-              {renderImageOrFallback(activePost?.imagem5, 'Imagem 5', 200)}
-              {renderImageOrFallback(activePost?.imagem6, 'Imagem 6', 200)}
+              <ImageWithFallback src={activePost?.imagem5} alt="Imagem 5" height={200} />
+              <ImageWithFallback src={activePost?.imagem6} alt="Imagem 6" height={200} />
             </Grid>
           </Grid>
 
@@ -161,7 +166,7 @@ export default function InfoArticlePage() {
           <Typography variant="h4" fontWeight={700} gutterBottom>
             {activePost?.titulo3}
           </Typography>
-          {renderImageOrFallback(activePost?.imagem7, 'Imagem 7', 400)}
+          <ImageWithFallback src={activePost?.imagem7} alt="Imagem 7" height={400} />
           <Typography variant="body1" sx={paragraphStyle} paragraph>
             {activePost?.paragraph10}
           </Typography>

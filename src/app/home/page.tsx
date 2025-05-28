@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { AnimeFeed } from '@/components/feed/AnimeFeed'
 
 export default function HomePage() {
