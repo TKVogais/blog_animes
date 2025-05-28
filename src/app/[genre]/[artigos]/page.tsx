@@ -4,20 +4,20 @@ import React, { useEffect, useState } from 'react'
 import { Box, Container, Grid, Typography, Divider, Paper } from '@mui/material'
 import { usePost } from '@/contexts/posts-context'
 
+// 👇 Linha em branco após imports
+
 interface ImageWithFallbackProps {
   src?: string
   alt?: string
   height?: number
 }
 
-const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
-  src,
-  alt = '',
-  height = 400,
-}) => {
+function ImageWithFallback({ src, alt = '', height = 400 }: ImageWithFallbackProps): JSX.Element {
   const [error, setError] = useState(false)
 
-  const handleError = () => setError(true)
+  function handleError(): void {
+    setError(true)
+  }
 
   if (error || !src) {
     return (
@@ -61,10 +61,10 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   )
 }
 
-const InfoArticlePage: React.FC = () => {
+function InfoArticlePage(): JSX.Element {
   const { activePost } = usePost()
 
-  useEffect(() => {
+  useEffect((): void => {
     document.title = 'Otaku Zone'
   }, [])
 
@@ -140,30 +140,22 @@ const InfoArticlePage: React.FC = () => {
           </Typography>
           <Grid container spacing={2} sx={{ my: 4 }}>
             <Grid item xs={12} sm={6}>
-              <ImageWithFallback src={activePost.imagem3} alt="Imagem 3" height={200} />
-              <ImageWithFallback src={activePost.imagem4} alt="Imagem 4" height={200} />
+              {[activePost.imagem3, activePost.imagem4].map((src, idx) => {
+                return <ImageWithFallback key={idx} src={src} alt={`Imagem ${idx + 3}`} height={200} />
+              })}
             </Grid>
             <Grid item xs={12} sm={6}>
-              <ImageWithFallback src={activePost.imagem5} alt="Imagem 5" height={200} />
-              <ImageWithFallback src={activePost.imagem6} alt="Imagem 6" height={200} />
+              {[activePost.imagem5, activePost.imagem6].map((src, idx) => {
+                return <ImageWithFallback key={idx + 2} src={src} alt={`Imagem ${idx + 5}`} height={200} />
+              })}
             </Grid>
           </Grid>
 
-          <Typography variant="body1" sx={{ ...paragraphStyle, mb: 4 }}>
-            {activePost.paragraph5}
-          </Typography>
-          <Typography variant="body1" sx={{ ...paragraphStyle, mb: 4 }}>
-            {activePost.paragraph6}
-          </Typography>
-          <Typography variant="body1" sx={{ ...paragraphStyle, mb: 4 }}>
-            {activePost.paragraph7}
-          </Typography>
-          <Typography variant="body1" sx={{ ...paragraphStyle, mb: 4 }}>
-            {activePost.paragraph8}
-          </Typography>
-          <Typography variant="body1" sx={{ ...paragraphStyle, mb: 4 }}>
-            {activePost.paragraph9}
-          </Typography>
+          {[activePost.paragraph5, activePost.paragraph6, activePost.paragraph7, activePost.paragraph8, activePost.paragraph9].map((text, idx) => (
+            <Typography key={idx} variant="body1" sx={{ ...paragraphStyle, mb: 4 }}>
+              {text}
+            </Typography>
+          ))}
 
           <Divider sx={{ mb: 4 }} />
           <Typography variant="h4" fontWeight={700} gutterBottom>

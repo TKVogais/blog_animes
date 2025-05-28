@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Grid,
@@ -21,11 +21,11 @@ import {
   UserCircle,
   Chat,
   Clock
-} from '@phosphor-icons/react';
+} from '@phosphor-icons/react'
 import { usePost } from '@/contexts/posts-context'
-import { green } from '@mui/material/colors'
 
-type Card = {
+// ✅ type substituído por interface
+interface Card {
   id: number
   imageUrl: string
   genre: string
@@ -50,12 +50,12 @@ const genreIcons: Record<string, JSX.Element> = {
   HORROR: <Ghost size={14} weight="bold" />,
   FANTASY: <Star size={14} weight="bold" />,
   SEINEN: <UserCircle size={14} weight="bold" />
-};
+}
 
-
-type EmptyFeedMessageProps = {
-  genre: string;
-};
+// ✅ type substituído por interface
+interface EmptyFeedMessageProps {
+  genre: string
+}
 
 function EmptyFeedMessage({ genre }: EmptyFeedMessageProps) {
   return (
@@ -74,12 +74,12 @@ function EmptyFeedMessage({ genre }: EmptyFeedMessageProps) {
     >
       {`\nNenhum post encontrado para este gênero 😢`}
     </Box>
-  );
+  )
 }
 
-
 export function AnimeFeed({ genre }: { genre?: string }) {
-  const [page, setPage] = React.useState(1)
+  // ✅ useState importado corretamente
+  const [page, setPage] = useState(1)
   const { posts, cards, setActivePostById } = usePost()
   const cardsPerPage = 6
 
@@ -92,14 +92,15 @@ export function AnimeFeed({ genre }: { genre?: string }) {
     ev.currentTarget.src = DEFAULT_IMAGE_URL
   }
 
-  const genero = (genre || "").replace(/-/g, ' ')
+  const genero = (genre || '').replace(/-/g, ' ')
 
-  const Cards: Card[] = (genero
-    ? cards?.filter(
-      (post: { genre: string }) =>
-        post.genre.toLowerCase() === genero.toLowerCase()
-    )
-    : cards) ?? []
+  const Cards: Card[] =
+    genero && cards
+      ? cards.filter(
+          (post: { genre: string }) =>
+            post.genre.toLowerCase() === genero.toLowerCase()
+        )
+      : cards ?? []
 
   const totalPages = Math.ceil(Cards.length / cardsPerPage)
   const currentCards = Cards.slice(
@@ -108,7 +109,7 @@ export function AnimeFeed({ genre }: { genre?: string }) {
   )
 
   if (Cards.length === 0) {
-    return <EmptyFeedMessage genre={genre || ""} />
+    return <EmptyFeedMessage genre={genre || ''} />
   }
 
   return (
@@ -177,13 +178,7 @@ export function AnimeFeed({ genre }: { genre?: string }) {
                   }}
                 >
                   <Tooltip title="Curtidas">
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 0.5
-                      }}
-                    >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                       <Heart weight="fill" size={16} />
                       <Typography variant="caption">
                         {card.likes.toLocaleString()}
@@ -191,13 +186,7 @@ export function AnimeFeed({ genre }: { genre?: string }) {
                     </Box>
                   </Tooltip>
                   <Tooltip title="Comentários">
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 0.5
-                      }}
-                    >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                       <Chat size={16} />
                       <Typography variant="caption">
                         {card.comments}
@@ -205,13 +194,7 @@ export function AnimeFeed({ genre }: { genre?: string }) {
                     </Box>
                   </Tooltip>
                   <Tooltip title="Tempo de leitura">
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 0.5
-                      }}
-                    >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                       <Clock size={16} />
                       <Typography variant="caption">
                         {card.readingTime}
