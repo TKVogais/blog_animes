@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo } from 'react'
-import { AnimeFeed } from '@/components/feed/AnimeFeed'
+import AnimeFeed from '@/components/feed/AnimeFeed'
 
 // 🔧 Interface renomeada para seguir a convenção de nomes
 interface GenrePageParams {
