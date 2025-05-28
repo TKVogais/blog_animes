@@ -22,6 +22,10 @@ module.exports = {
     },
   },
   rules: {
+    'no-undef': 'off', // Desativa erro de JSX com JSX automático
+    'react/react-in-jsx-scope': 'off', // JSX automático no React 17+
+    'react/jsx-uses-react': 'off', // JSX automático no React 17+
+
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
@@ -44,11 +48,6 @@ module.exports = {
       },
     ],
     'import/newline-after-import': 'error',
-    
-    // DESLIGANDO as regras que exigem import React no JSX
-    'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
-
     'unicorn/filename-case': [
       'error',
       {
@@ -59,7 +58,7 @@ module.exports = {
       },
     ],
 
-    // Desativadas
+    // Regras desativadas
     '@typescript-eslint/dot-notation': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
@@ -79,7 +78,6 @@ module.exports = {
     'no-redeclare': 'off',
     'react/jsx-fragments': 'off',
     'react/prop-types': 'off',
-
     '@next/next/no-img-element': 'off',
   },
 }
