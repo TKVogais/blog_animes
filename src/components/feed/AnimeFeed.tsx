@@ -62,7 +62,7 @@ export default function AnimeFeed({ genre }: AnimeFeedProps): React.JSX.Element 
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const lighterBorder: string = 'rgba(0, 0, 0, 0.16)'
+  const lighterBorder = 'rgba(0, 0, 0, 0.16)'
 
   // Filtra os posts pelo gênero passado, comparando em maiúsculas para evitar problemas de case
   const filteredPosts = allPosts.filter(
